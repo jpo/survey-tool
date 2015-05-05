@@ -1,0 +1,49 @@
+﻿@model IEnumerable<SurveyTool.Models.QuestionViewModel>
+
+<h5>Responses</h5>
+@if (Model.Any())
+{
+    <div id="responses" class="accordion">
+        @for (var i = 0; i < Model.Count(); i++)
+        {
+            var item = Model.ElementAt(i);
+            <div class="accordion-group">
+                <div class="accordion-heading">
+                    <a class="accordion-toggle" href="@String.Concat("#item", i)" data-parent="#responses" data-toggle="collapse">
+                        @if (item.Type == "Yes/No")
+                        {
+                            if (item.Percentage > 0.0)
+                            {
+                                <div class="progress span2 pull-right" style="margin-bottom: 0">
+                                    <div class="bar bar-success" style="width: 100%">
+                                        @item.Score/@item.Total (@item.PercentageString)
+                                    </div>
+                                </div>
+                            }
+                            else
+                            {
+                                <div class="progress span2 pull-right" style="margin-bottom: 0">
+                                    <div class="bar bar-danger" style="width: 100%">
+                                        @item.Score/@item.Total (@item.PercentageString)
+                                    </div>
+                                </div>
+                            }
+                        }
+                        else
+                        {
+                            <div class="progress span2 pull-right" style="margin-bottom: 0">
+                                <div class="bar bar-info" style="width: 100%">
+                                    @item.Score
+                                </div>
+                            </div>
+                        }
+                        @item.Title
+                    </a>
+                </div>
+                <div id="@String.Concat("item", i)" class="accordion-body collapse">
+                    <div class="accordion-inner">@Html.Raw(item.Body)</div>
+                </div>
+            </div>
+        }
+    </div>
+}

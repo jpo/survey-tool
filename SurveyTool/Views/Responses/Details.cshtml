@@ -1,0 +1,59 @@
+﻿@model SurveyTool.Models.Response
+
+@{
+    ViewBag.Title = Model.Survey.Name;
+}
+
+<div class="page-header">
+    <h3>@ViewBag.Title</h3>
+</div>
+
+<div class="well well-small">
+    <h4>Response Information</h4>
+</div>
+<ul class="unstyled bordered skip-first">
+    <li class="row">
+        <div class="span9">
+            <label><b>User</b></label>
+            <p class="help-block">
+                The user that completed this survey.
+            </p>
+        </div>
+        <div class="span3">
+            <div class="well well-small">
+                @Model.CreatedBy
+            </div>
+        </div>
+    </li>
+    <li class="row">
+        <div class="span9">
+            <label><b>Survey Date</b></label>
+            <p class="help-block">
+                The date on which the audit occurred.
+            </p>
+        </div>
+        <div class="span3">
+            <div class="well well-small">
+                @Model.CreatedOn.ToString("d")
+            </div>
+        </div>
+    </li>
+</ul>
+
+<div class="well well-small">
+    <h4>Questions</h4>
+</div>
+<ul class="unstyled bordered skip-first">
+    @foreach (var item in Model.Answers)
+    {
+        <li class="row">
+            <div class="span9">
+                @Html.Raw(item.Question.Body)
+            </div>
+            <div class="span3">
+                <div class="well well-small">@item.Value</div>
+                <div class="well well-small">@item.Comment</div>
+            </div>
+        </li>
+    }
+</ul>

@@ -1,0 +1,68 @@
+﻿@model IEnumerable<SurveyTool.Models.Survey>
+
+@{
+    ViewBag.Title = "Surveys";
+}
+
+@section scripts
+{
+    @Scripts.Render("~/bundles/models")
+
+    <script type="text/javascript">
+        $(function() {
+            ko.applyBindings(new SurveyListModel(), $('#survey-list')[0]);
+        })
+    </script>
+}
+
+<div class="page-header">
+    <a class="btn btn-success pull-right" href="@Url.Action("Create")">
+        <i class="icon-plus"></i> New Survey
+    </a>
+    <h2>Surveys <small>Add or manage surveys</small></h2>
+</div>
+
+<table id="survey-list" class="table table-striped">
+    <thead>
+        <tr>
+            <th class="span1">ID</th>
+            <th class="span8">Name</th>
+            <th class="span2">Status</th>
+            <th class="span1">Action</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>@item.Id</td>
+                <td>@item.Name</td>
+                <td>@Html.DisplayFor(x => item.IsActive, "IsActive")</td>
+                <td>
+                    <div class="btn-group">
+                        <button class="btn btn-small dropdown-toggle" data-toggle="dropdown">
+                            <i class="icon-wrench"></i><span class="caret"></span>
+                        </button>
+                        <ul class="dropdown-menu pull-right">
+                            <li>
+                                <a href="@Url.Action("Edit", new {id = item.Id})">
+                                    <i class="icon-pencil"></i> Edit
+                                </a>
+                            </li>
+                            <li>
+                                <a href="@Url.Action("Delete", new {id = item.Id})" data-bind="click: destroy">
+                                    <i class="icon-trash"></i> Delete
+                                </a>
+                            </li>
+                            <li>
+                                <a href="@Url.Action("Index", "Responses", new { surveyId = item.Id })">
+                                    <i class="icon-list"></i> Responses
+                                </a>
+                            </li>
+                        </ul>
+                    </div>
+                </td>
+            </tr> 
+        }
+    </tbody>
+</table>

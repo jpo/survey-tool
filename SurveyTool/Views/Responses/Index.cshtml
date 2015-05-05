@@ -1,0 +1,57 @@
+﻿@model IEnumerable<SurveyTool.Models.Response>
+
+@{
+    ViewBag.Title = "Responses";
+}
+
+@section scripts
+{
+    @Scripts.Render("~/bundles/models")
+
+    <script type="text/javascript">
+        $(function () {
+            ko.applyBindings(new ResponseListModel(), $('#response-list')[0]);
+        })
+    </script>
+}
+
+<div class="page-header">
+    <h2>Responses <small>Manage survey responses</small></h2>
+</div>
+
+<table id="response-list" class="table table-striped">
+    <thead>
+        <tr>
+            <th class="span1">Date</th>
+            <th class="span6">Survey</th>
+            <th class="span2">Team Member</th>
+            <th class="span2">Results</th>
+            <th class="span1">Action</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td><span class="muted">@item.CreatedOn.ToString("d")</span></td>
+                <td>
+                    <a href="@Url.Action("Details", "Responses", new {surveyId = item.SurveyId, id = item.Id})">
+                        @item.Survey.Name
+                    </a>
+                </td>
+                <td>
+                    @item.CreatedBy
+                </td>
+                <td>
+                    @item.GetAnswerCount()/@item.GetQuestionCount() - 
+                    @item.CalculateScore().ToString("P1")
+                </td>
+                <td>
+                    @Html.ActionLink("Delete", "Delete",
+                                     new { Controller = "Responses", surveyId = item.SurveyId, id = item.Id },
+                                     new { @class = "text-error", data_bind = "click: destroy" })
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>

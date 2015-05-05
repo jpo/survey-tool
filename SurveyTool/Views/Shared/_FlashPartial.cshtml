@@ -1,0 +1,8 @@
+﻿@foreach (var key in TempData.Keys)
+{
+    <script type="text/javascript">
+        $(function() {
+            toastr["@(key)"]("@TempData[key]");
+        });
+    </script>
+}

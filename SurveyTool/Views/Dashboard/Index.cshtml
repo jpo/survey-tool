@@ -1,0 +1,128 @@
+﻿@{
+    ViewBag.Title = "Dashboard";
+    var surveys = (IEnumerable<SurveyTool.Models.Survey>) ViewBag.Surveys;
+    var responses = (IEnumerable<SurveyTool.Models.Response>) ViewBag.Responses;
+}
+
+@section scripts
+{
+    @Scripts.Render("~/bundles/models")
+
+    <script type="text/javascript">
+        $(function () {
+            $('#tabs a:first').tab('show');
+
+            $('.label-success').tooltip({
+                title: 'You can access this survey',
+                placement: 'top'
+            });
+
+            $('.label-important').tooltip({
+                title: 'You cannot access this survey',
+                placement: 'top'
+            });
+
+            ko.applyBindings(new ResponseListModel(), $('#response-list')[0]);
+        })
+    </script>
+}
+
+<div class="page-header">
+    <h2>Surveys <small>Take surveys and view history</small></h2>
+</div>
+
+<ul id="tabs" class="nav nav-tabs">
+    <li><a class="active" href="#take-survey" data-toggle="tab"><i class="icon-list-alt"></i> Surveys</a></li>
+    <li><a href="#history" data-toggle="tab"><i class="icon-time"></i> History</a></li>
+</ul>
+
+<div class="tab-content">
+    <div id="take-survey" class="tab-pane active">
+        @foreach (var survey in surveys)
+        {
+            <div class="row">
+                <div class="span9">
+                    <h4>
+                        @if (survey.IsActive)
+                        {
+                            <span class="label label-success">A</span>
+                            <a href="@Url.Action("Create", "Responses", new { surveyId = survey.Id })">@survey.Name</a>
+                        }
+                        else
+                        {
+                            <span class="label label-important">X</span>
+                            <span class="muted">@survey.Name</span>
+                        }
+                    </h4>
+                </div>
+                <div class="span3 text-right">
+                    @if (survey.IsActive)
+                    {
+                        <a class="btn" href="@Url.Action("Create", "Responses", new { surveyId = survey.Id })">
+                            Start Survey <i class="icon-arrow-right"></i>
+                        </a>
+                    }
+                    else
+                    {
+                        <a class="btn disabled" href="#">Start Survey <i class="icon-arrow-right"></i></a>
+                    }
+                </div>
+            </div>
+            <div class="row">
+                <div class="span4 text-left">
+                    <span class="@(survey.IsActive ? "" : "muted")">
+                        @survey.Questions.Count() Questions
+                    </span>
+                </div>
+                <div class="span4 text-center">
+                    <span class="@(survey.IsActive ? "" : "muted")">
+                        Active: @survey.StartDate.ToString("d")
+                        to @survey.EndDate.ToString("d")
+                    </span>
+                </div>
+                <div class="span4 text-right">
+                    <span class="@(survey.IsActive ? "" : "muted")">
+                        Your Latest Response: 
+                        @(survey.Responses.Select(x => x.CreatedOn.ToString("d")).FirstOrDefault() ?? "Never")
+                    </span>
+                </div>
+            </div>
+
+            <hr />
+        }
+    </div>
+    <div id="history" class="tab-pane">
+        <table id="response-list" class="table table-striped">
+            <thead>
+                <tr>
+                    <th class="span1">Date</th>
+                    <th class="span8">Survey</th>
+                    <th class="span2">Results</th>
+                    <th class="span1">Action</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var response in responses)
+                {
+                    <tr>
+                        <td><span class="muted">@response.CreatedOn.ToString("d")</span></td>
+                        <td>
+                            @Html.ActionLink(response.Survey.Name, "Details", "Responses", 
+                                             new {surveyId = response.SurveyId, id = response.Id}, 
+                                             null)
+                        </td>
+                        <td>
+                            @response.GetAnswerCount()/@response.GetQuestionCount() - 
+                            @response.CalculateScore().ToString("P1")
+                        </td>
+                        <td>
+                            @Html.ActionLink("Delete", "Delete",
+                                             new { Controller = "Responses", surveyId = response.SurveyId, id = response.Id },
+                                             new { @class = "text-error", data_bind = "click: destroy" })
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+</div>

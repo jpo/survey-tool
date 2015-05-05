@@ -1,0 +1,33 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <title>@ViewBag.Title - Survey Tool</title>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" /> 
+    @Styles.Render("~/Content/bootstrap")
+    @Styles.Render("~/Content/cleditor")
+    @Styles.Render("~/Content/toastr")
+    @Styles.Render("~/Content/site")
+</head>
+<body>
+    <div class="navbar navbar-inverse navbar-fixed-top">
+        <div class="navbar-inner">
+            <div class="container">
+                <a class="brand" href="/">Survey Tool</a>
+                @Html.Partial("_MenuPartial")
+                @Html.Partial("_LoginPartial")
+            </div>
+        </div>
+    </div>
+
+    <div id="content" class="container">
+        @RenderBody()
+    </div>
+    
+    @Scripts.Render("~/bundles/jquery")
+    @Scripts.Render("~/bundles/bootstrap")
+    @Scripts.Render("~/bundles/knockout")
+    @Scripts.Render("~/bundles/toastr")
+    @RenderSection("scripts", required: false)
+    @Html.Partial("_FlashPartial")
+</body>
+</html>

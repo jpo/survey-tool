@@ -1,0 +1,39 @@
+﻿@model SurveyTool.Models.ReportViewModel
+
+@{
+    ViewBag.Title = "Details";
+}
+
+@section Scripts
+{
+    <script type="text/javascript">
+        $(function() {
+            $('.datepicker').datepicker();
+        });
+    </script>
+}
+
+<div class="page-header">
+    <div class="span5 pull-right">
+        <form action="" method="get">
+            <div class="controls controls-row">
+                <div class="form-inline span2">
+                    <label>Start</label>
+                    <input name="startDate" class="datepicker input-small" type="text" value="@Model.StartDate.ToString("d")" />
+                </div>
+                <div class="form-inline span2">
+                    <label>End</label>
+                    <input name="endDate" class="datepicker input-small" type="text" value="@Model.EndDate.ToString("d")" />
+                </div>
+                <button class="btn" type="submit"><i class="icon-search"></i></button>
+            </div>
+        </form>
+    </div>
+    <h2>Reports <small>@Model.Survey.Name</small></h2>
+</div>
+
+<div class="row">
+    <div class="span12">
+        @Html.DisplayFor(x => x.Responses, "Responses")
+    </div>
+</div>
