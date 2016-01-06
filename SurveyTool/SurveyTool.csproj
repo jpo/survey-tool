@@ -201,13 +201,9 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
-    <Compile Include="Migrations\201505041643171_InitialCreate.cs" />
-    <Compile Include="Migrations\201505041643171_InitialCreate.Designer.cs">
-      <DependentUpon>201505041643171_InitialCreate.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201505041649459_SurveysCreate.cs" />
-    <Compile Include="Migrations\201505041649459_SurveysCreate.Designer.cs">
-      <DependentUpon>201505041649459_SurveysCreate.cs</DependentUpon>
+    <Compile Include="Migrations\201601061940171_InitialCreate.cs" />
+    <Compile Include="Migrations\201601061940171_InitialCreate.Designer.cs">
+      <DependentUpon>201601061940171_InitialCreate.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
@@ -340,11 +336,8 @@
     <Folder Include="App_Data\" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Migrations\201505041643171_InitialCreate.resx">
-      <DependentUpon>201505041643171_InitialCreate.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201505041649459_SurveysCreate.resx">
-      <DependentUpon>201505041649459_SurveysCreate.cs</DependentUpon>
+    <EmbeddedResource Include="Migrations\201601061940171_InitialCreate.resx">
+      <DependentUpon>201601061940171_InitialCreate.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>
