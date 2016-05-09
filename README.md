@@ -27,6 +27,6 @@ To get started quickly, you can just run it locally. Setting that up goes someth
 * Restart Visual Studio (This step is necessary for VS to load the necessary
   Package Manager commands required the following steps.
 * Open Package Manager Console
-* Run database migrations by running the ```update-packages``` command
+* Run database migrations by running the ```update-database``` command
 * Press ```Ctrl+F5``` to build and run the application
 * Visual Studio should automatically navigate to the application's home page in your browser
